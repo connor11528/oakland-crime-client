@@ -16,43 +16,54 @@
   </head>
   <body>
 
-    <!-- Sidebar -->
-    <div class='col-md-4'>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" href="#collapseOne">
-                        <i class="fa fa-info-circle"></i> What is this?
-                    </a>
-                </h4>
+    <div class='container'>
+        <div class='row'>
+            <!-- Sidebar -->
+            <div class='col-md-4'>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapseOne">
+                                <i class="fa fa-info-circle"></i> What is this?
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class='panel-body'>This is the panel body</div>
+                    </div>
+                </div>
+
+                <form role='form' id='search-form'>
+                    <div class='form-group col-sm-12'>
+                        <label for='date_range'>
+                            <i class="fa fa-calendar"></i> Date Reported
+                        </label>
+                        <input name='date_range' class='date-filter start form-control active' type='text'>
+                    </div>
+                    <div class='form-group col-sm-12'>
+                        <label for='crime_type'>
+                            <i class="fa fa-navicon"></i> Crime Type
+                        </label>
+                        <input name='crime_type' class='form-control' data-role="tagsinput" type='text'></input>
+                    </div>
+                </form>
+
+                <div id='spinner'></div>
+                <div class="alert alert-info" role="alert">Loading crimes for given date range...</div>
+
             </div>
-            <div id="collapseOne" class="panel-collapse collapse">
-                <div class='panel-body'>This is the panel body</div>
+            <!-- /Sidebar -->
+
+            <div class='col-md-8'>
+                <div id="map-canvas"></div>
             </div>
         </div>
 
-        <form role='form' id='search-form'>
-            <div class='form-group col-sm-12'>
-                <label for='date_range'>
-                    <i class="fa fa-calendar"></i> Date Reported
-                </label>
-                <input name='date_range' class='date-filter start form-control active' type='text'>
-            </div>
-            <div class='form-group col-sm-12'>
-                <label for='crime_type'>
-                    <i class="fa fa-navicon"></i> Crime Type
-                </label>
-                <input name='crime_type' class='form-control' data-role="tagsinput" type='text'></input>
-            </div>
+        <div class='row'>
+            <h3>Data on all crimes in date range</h3>
 
-            <button type='submit' class='btn btn-success'>Update Crimes</button>
-        </form>
-
-    </div>
-    <!-- /Sidebar -->
-
-    <div class='col-md-8'>
-        <div id="map-canvas"></div>
+            <pre id='current_crimes'>{{ CURRENT_CRIMES }}</pre>
+        </div>
     </div>
 
     
@@ -63,6 +74,7 @@
     <script src='scripts/lib/daterangepicker.js'></script>
     <script src='scripts/lib/bootstrap-tagsinput.js'></script>
     <script src='scripts/lib/typeahead.bundle.js'></script>
+    <script src='scripts/lib/spin.js'></script>
 
     <script src='scripts/main.js'></script>
 

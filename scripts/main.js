@@ -5,12 +5,16 @@ var end_date = moment('2013-10-31');
 var $crime_type = $('input[name="crime_type"]');
 var $date_range = $('input[name="date_range"]');
 
+var CIRCLE_RADIUS = 800;
+var CURRENT_CRIMES;
+
 // development
 API_URL = 'http://localhost:8080';
 
 $(function(){
 	// load map
 	var map_container = initialize_map();
+	var $alert_info = $(".alert-info").hide();
 
 	get_crime_categories().then(function(categories){
 		// populate categories
@@ -47,7 +51,8 @@ $(function(){
 	}, function(err){
 		console.log('oh shit')
 	});
-
+	
+	// specify date range for crimes
 	$date_range.daterangepicker({
 		format: 'YYYY-MM-DD',
 		startDate: start_date,
@@ -59,43 +64,68 @@ $(function(){
 		// dateLimit:
 	});
 
-	update_date_range();
+	// load crimes for initial date
+	$date_range.val(start_date.format('YYYY-MM-DD') + " - " + end_date.format('YYYY-MM-DD'));
+	var spinner_target = document.getElementById('spinner');
+	var spinner = new Spinner().spin();
+	spinner_target.appendChild(spinner.el);
+	$alert_info.show();
 
-	var CURRENT_CRIMES;
+	get_crimes_by_date(start_date.format('YYYY-MM-DD'), end_date.format('YYYY-MM-DD'), function(crimes){
+		CURRENT_CRIMES = crimes;
+		spinner.stop();
+		$alert_info.hide();
+	});
 
 	// LISTENERS
-	// date 'apply' button clicked
+	// do it again when 'apply' button clicked
 	$date_range.on('apply.daterangepicker', function(e, picker){
+
 		var start = picker.startDate.format();
 		var end = picker.endDate.format();
+		spinner = new Spinner().spin();
+		spinner_target.appendChild(spinner.el);
+		$alert_info.show();
 
 		get_crimes_by_date(start, end, function(crimes){
-			console.log(crimes)
+			CURRENT_CRIMES = crimes;
+			spinner.stop();
+			$alert_info.hide();
 		});
 	});
 
-	$('#search-form').submit(function(e){
-		e.preventDefault();
-		console.log('does nothing')
-		// get_crimes_by_date($date_range.val());
-	});
-
+	// see which CURRENT_CRIMES happened within bounds of circle
 	google.maps.event.addListener(map_container.circle, 'dragend', function(e){
 		var circle = this;
-		circle.getBounds()
-		console.log('drag happened')
+		var bounds = circle.getBounds();
+
+		for(var i = 0; i < CURRENT_CRIMES.length; i++){
+			var crime = CURRENT_CRIMES[i];
+			var point = new google.maps.LatLng(parseFloat(crime.location[0]), parseFloat(crime.location[1]));
+			if (bounds.contains(point)){
+				// add marker to map
+				console.log(crime);
+
+				var marker = new google.maps.Marker({
+					position: point,
+					map: map,
+					title: crime.description
+				});
+			}
+			
+		}
 	});
 	
 });
-
 
 // HELPER FUNCTIONS
 function initialize_map() {
 	var mapOptions = {
 	  center: oakland,
-	  zoom: 14
+	  zoom: 13,
+	  mapTypeId: google.maps.MapTypeId.TERRAIN
 	};
-	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 	var circleOptions = {
 		strokeColor: '#FF0000',
 		strokeOpacity: 0.8,
@@ -105,22 +135,10 @@ function initialize_map() {
 		fillOpacity: 0.35,
 		map: map,
 		center: oakland,
-		radius: 1000
+		radius: CIRCLE_RADIUS
     };
 	var circle = new google.maps.Circle(circleOptions);
 	return { circle: circle, map: map };
-}
-
-function update_date_range(){
-    $date_range.val(start_date.format('YYYY-MM-DD') + " - " + end_date.format('YYYY-MM-DD'));
-}
-
-function get_crime_categories(){
-	var dfd = $.Deferred();
-	$.get(API_URL + '/api/crimeCategories', function(data){
-		dfd.resolve(data);
-	});
-	return dfd.promise();
 }
 
 function get_crimes_by_date(start, end, cb){
@@ -130,6 +148,14 @@ function get_crimes_by_date(start, end, cb){
 		data: { start: start, end: end },
 		success: cb
 	});
+}
+
+function get_crime_categories(){
+	var dfd = $.Deferred();
+	$.get(API_URL + '/api/crimeCategories', function(data){
+		dfd.resolve(data);
+	});
+	return dfd.promise();
 }
 
 // get_crimes_by_type($crime_type.val())
