@@ -1,11 +1,13 @@
 var oakland = { lat: 37.807314, lng: -122.271371 };
 var API_URL = 'http://oakland-crime.herokuapp.com';
 var start_date = moment('2013-10-01');
-var end_date = moment('2013-10-31');
+var end_date = moment('2013-10-15');
 var $crime_type = $('input[name="crime_type"]');
 var $date_range = $('input[name="date_range"]');
 
 var CIRCLE_RADIUS = 800;
+var MARKERS = [];
+google.maps.InfoWindow.prototype.all = [];
 var CURRENT_CRIMES;
 
 // development
@@ -73,6 +75,7 @@ $(function(){
 
 	get_crimes_by_date(start_date.format('YYYY-MM-DD'), end_date.format('YYYY-MM-DD'), function(crimes){
 		CURRENT_CRIMES = crimes;
+		add_markers(map_container.circle.getBounds())
 		spinner.stop();
 		$alert_info.hide();
 	});
@@ -94,26 +97,12 @@ $(function(){
 		});
 	});
 
-	// see which CURRENT_CRIMES happened within bounds of circle
+	// see which crimes in date range happened within bounds of circle
 	google.maps.event.addListener(map_container.circle, 'dragend', function(e){
 		var circle = this;
 		var bounds = circle.getBounds();
 
-		for(var i = 0; i < CURRENT_CRIMES.length; i++){
-			var crime = CURRENT_CRIMES[i];
-			var point = new google.maps.LatLng(parseFloat(crime.location[0]), parseFloat(crime.location[1]));
-			if (bounds.contains(point)){
-				// add marker to map
-				console.log(crime);
-
-				var marker = new google.maps.Marker({
-					position: point,
-					map: map,
-					title: crime.description
-				});
-			}
-			
-		}
+		add_markers(bounds);
 	});
 	
 });
@@ -122,7 +111,7 @@ $(function(){
 function initialize_map() {
 	var mapOptions = {
 	  center: oakland,
-	  zoom: 13,
+	  zoom: 14,
 	  mapTypeId: google.maps.MapTypeId.TERRAIN
 	};
 	window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -148,6 +137,43 @@ function get_crimes_by_date(start, end, cb){
 		data: { start: start, end: end },
 		success: cb
 	});
+}
+
+function add_markers(shape){
+	// clear markers
+	for(var i = 0; i < MARKERS.length; i++){
+        MARKERS[i].setMap(null);
+    }
+	
+	// add markers
+	for(var j = 0; j < CURRENT_CRIMES.length; j++){
+		var crime = CURRENT_CRIMES[j];
+		var point = new google.maps.LatLng(parseFloat(crime.location[0]), parseFloat(crime.location[1]));
+		
+		if (shape.contains(point)){
+			// add marker to map
+			var marker = new google.maps.Marker({
+				position: point,
+				map: map,
+				title: crime.description
+			});
+			MARKERS.push(marker);
+
+			// add info window and listener
+			marker.info = new google.maps.InfoWindow({
+				content: marker.title,
+				position: marker.position
+			});
+
+			google.maps.event.addListener(marker, 'click', function(point) {
+				if (google.maps.InfoWindow.prototype.all.length !== 0){
+					google.maps.InfoWindow.prototype.all.shift().close();
+				}
+				google.maps.InfoWindow.prototype.all.push(this.info);
+				this.info.open(map);
+			});
+		}
+	}
 }
 
 function get_crime_categories(){
