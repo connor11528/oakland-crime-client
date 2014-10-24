@@ -1,6 +1,8 @@
 oakland-crime-client
 ====
 
+- Sort by police beats (all based on date range)
+
 ## Development
 
 Datepicker [documentation](https://github.com/dangrossman/bootstrap-daterangepicker)
