@@ -1,0 +1,27 @@
+{
+  "name": "oakland-crime-client",
+  "version": "1.0.0",
+  "description": "oakland-crime-client ====",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.8.10",
+    "gulp-connect": "^2.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-connect": "^2.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jasonshark/oakland-crime-client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasonshark/oakland-crime-client/issues"
+  },
+  "homepage": "https://github.com/jasonshark/oakland-crime-client"
+}
