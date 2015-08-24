@@ -15,12 +15,26 @@
   </head>
   <body>
 
-    <div class='text-center'>
+    <div class='row text-center'>
+        <h1>Oakland Crimes in the Past 90 Days</h1>
+        <a href='https://data.oaklandnet.com/Public-Safety/CrimeWatch-Maps-Past-90-Days/ym6k-rx7a'>DATA SOURCE</a>
+    </div>
+
+    <div class='row text-center'>
         <canvas id="radarChart" width="800" height="800"></canvas>
+    </div>
+
+    <div class='row text-center'>
+        <canvas id="barChart" width="800" height="800"></canvas>
+    </div>
+
+    <div class='row text-center'>
+        <canvas id="lineChart" width="800" height="800"></canvas>
     </div>
     
     <script src='//code.jquery.com/jquery-2.1.1.js'></script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js'></script>
     <script src='scripts/lib/PapaParse.js'></script>
     <script src='scripts/lib/spin.js'></script>
