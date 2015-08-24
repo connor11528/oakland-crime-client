@@ -15,20 +15,26 @@
   </head>
   <body>
 
-    <div class='row text-center'>
-        <h1>Oakland Crimes in the Past 90 Days</h1>
-        <a href='https://data.oaklandnet.com/Public-Safety/CrimeWatch-Maps-Past-90-Days/ym6k-rx7a'>DATA SOURCE</a>
+    <div class='row text-center' style='margin-bottom:80px;'>
+        <h1>Oakland Crimes</h1>
+        <i>Aug - Nov 2014</i>
+        <a target='_blank' href='https://data.oaklandnet.com/Public-Safety/CrimeWatch-Maps-Past-90-Days/ym6k-rx7a'>DATA SOURCE</a>
     </div>
 
     <div class='row text-center'>
+        <h2 style='margin-bottom: -100px;'>Crimes by Type</h2>
         <canvas id="radarChart" width="800" height="800"></canvas>
     </div>
 
-    <div class='row text-center'>
+    <div class='row text-center' style='margin-bottom:100px;'>
+        <h2>Crimes by Beat</h2>
         <canvas id="barChart" width="800" height="800"></canvas>
+
+        <h4 style='margin-top:-30px;'>Find out which beat you live in <a href='http://oaklandbeats.com/' target='_blank'>here</a></h4>
     </div>
 
     <div class='row text-center'>
+        <h2>Crimes by Date</h2>
         <canvas id="lineChart" width="800" height="800"></canvas>
     </div>
     
