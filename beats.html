@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Oakland Crime</title>
+    
+    <meta name="description" content="oakland crime data open data visualization">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+    <link rel="stylesheet" href="styles/main.css">
+  </head>
+  <body>
+
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-12'>
+                <div id="map-canvas"></div>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col-md-3'>
+                <h1>List of beats</h1>
+                <ul id="beatlist"><li><h3 id="23X">23X</h3></li><li><h3 id="02X">02X</h3></li><li><h3 id=""></h3></li><li><h3 id="22X">22X</h3></li><li><h3 id="03X">03X</h3></li><li><h3 id="99X">99X</h3></li><li><h3 id="03Y">03Y</h3></li><li><h3 id="30Y">30Y</h3></li><li><h3 id="01X">01X</h3></li><li><h3 id="29">29</h3></li><li><h3 id="25Y">25Y</h3></li><li><h3 id="27Y">27Y</h3></li><li><h3 id="34X">34X</h3></li><li><h3 id="30X">30X</h3></li><li><h3 id="10X">10X</h3></li><li><h3 id="16X">16X</h3></li><li><h3 id="24X">24X</h3></li><li><h3 id="18Y">18Y</h3></li><li><h3 id="02Y">02Y</h3></li><li><h3 id="29X">29X</h3></li><li><h3 id="21Y">21Y</h3></li><li><h3 id="04X">04X</h3></li><li><h3 id="20X">20X</h3></li><li><h3 id="26Y">26Y</h3></li><li><h3 id="26X">26X</h3></li><li><h3 id="08X">08X</h3></li><li><h3 id="32X">32X</h3></li><li><h3 id="25X">25X</h3></li><li><h3 id="27X">27X</h3></li><li><h3 id="12Y">12Y</h3></li><li><h3 id="07X">07X</h3></li><li><h3 id="19X">19X</h3></li><li><h3 id="35X">35X</h3></li><li><h3 id="17X">17X</h3></li><li><h3 id="11X">11X</h3></li><li><h3 id="28X">28X</h3></li><li><h3 id="22Y">22Y</h3></li><li><h3 id="33X">33X</h3></li><li><h3 id="26">26</h3></li><li><h3 id="21X">21X</h3></li><li><h3 id="06X">06X</h3></li><li><h3 id="17Y">17Y</h3></li><li><h3 id="24Y">24Y</h3></li><li><h3 id="18X">18X</h3></li><li><h3 id="31Y">31Y</h3></li><li><h3 id="05X">05X</h3></li><li><h3 id="14X">14X</h3></li><li><h3 id="14Y">14Y</h3></li><li><h3 id="32Y">32Y</h3></li><li><h3 id="31X">31X</h3></li><li><h3 id="31Z">31Z</h3></li><li><h3 id="24">24</h3></li><li><h3 id="09X">09X</h3></li><li><h3 id="12X">12X</h3></li><li><h3 id="77X">77X</h3></li><li><h3 id="13Z">13Z</h3></li><li><h3 id="10Y">10Y</h3></li><li><h3 id="13Y">13Y</h3></li><li><h3 id="35Y">35Y</h3></li><li><h3 id="13X">13X</h3></li><li><h3 id="15X">15X</h3></li><li><h3 id="16Y">16Y</h3></li><li><h3 id="05Y">05Y</h3></li><li><h3 id="23">23</h3></li><li><h3 id="21">21</h3></li><li><h3 id="30">30</h3></li><li><h3 id="35">35</h3></li><li><h3 id="18">18</h3></li><li><h3 id="27">27</h3></li><li><h3 id="28">28</h3></li><li><h3 id="20">20</h3></li><li><h3 id="19">19</h3></li><li><h3 id="34">34</h3></li><li><h3 id="15">15</h3></li><li><h3 id="11">11</h3></li><li><h3 id="31">31</h3></li><li><h3 id="03">03</h3></li><li><h3 id="32">32</h3></li><li><h3 id="07">07</h3></li><li><h3 id="08">08</h3></li><li><h3 id="33">33</h3></li><li><h3 id="10">10</h3></li><li><h3 id="8">8</h3></li><li><h3 id="PDT2">PDT2</h3></li><li><h3 id="1">1</h3></li><li><h3 id="13">13</h3></li><li><h3 id="2">2</h3></li><li><h3 id="4">4</h3></li><li><h3 id="22">22</h3></li><li><h3 id="12">12</h3></li><li><h3 id="04">04</h3></li><li><h3 id="06">06</h3></li><li><h3 id="17">17</h3></li><li><h3 id="5">5</h3></li><li><h3 id="02">02</h3></li><li><h3 id="7">7</h3></li><li><h3 id="05">05</h3></li><li><h3 id="16">16</h3></li><li><h3 id="14">14</h3></li><li><h3 id="01">01</h3></li><li><h3 id="6">6</h3></li><li><h3 id="3">3</h3></li><li><h3 id="09">09</h3></li><li><h3 id="25">25</h3></li><li><h3 id="9">9</h3></li><li><h3 id="4Y">4Y</h3></li><li><h3 id="19Y">19Y</h3></li><li><h3 id="15Y">15Y</h3></li><li><h3 id="20Y">20Y</h3></li><li><h3 id="99x">99x</h3></li><li><h3 id="BERKELEY">BERKELEY</h3></li><li><h3 id="LKM1">LKM1</h3></li><li><h3 id="77x">77x</h3></li><li><h3 id="113Z">113Z</h3></li><li><h3 id="88X">88X</h3></li><li><h3 id="B99X">B99X</h3></li><li><h3 id="21Z">21Z</h3></li><li><h3 id="33O">33O</h3></li><li><h3 id="33Y">33Y</h3></li><li><h3 id="327">327</h3></li><li><h3 id="94605">94605</h3></li><li><h3 id="08Y">08Y</h3></li><li><h3 id="1L28">1L28</h3></li><li><h3 id="PCW">PCW</h3></li><li><h3 id="37Y">37Y</h3></li><li><h3 id="45Y">45Y</h3></li><li><h3 id="02 X">02 X</h3></li><li><h3 id="17 Y">17 Y</h3></li><li><h3 id="21 Y">21 Y</h3></li><li><h3 id="O">O</h3></li><li><h3 id="00">00</h3></li><li><h3 id="29Y">29Y</h3></li><li><h3 id="30 X">30 X</h3></li><li><h3 id="27 Y">27 Y</h3></li><li><h3 id="107">107</h3></li><li><h3 id="23Y">23Y</h3></li><li><h3 id="P3">P3</h3></li><li><h3 id="77XINC">77XINC</h3></li></ul>
+            </div>
+            <div class='col-md-9'>
+                <h2>Show beat data here</h2>
+
+                <pre id='current-beat'></pre>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src='//code.jquery.com/jquery-2.1.1.js'></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js'></script>
+    <script src="//cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src='scripts/lib/spin.js'></script>
+
+    <script src='scripts/crimes-by-beat.js'></script>
+</body>
+</html>
